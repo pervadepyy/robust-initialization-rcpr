@@ -44,16 +44,6 @@ faceTlbpHist = getlbpHist(faceT);
 % load('faceTlbpHist.mat','faceTlbpHist');
 [p, corrindexT]=shapeGt('initTest',faceTrlbpHist,faceTlbpHist,bboxesT,regModel.model,...
     regModel.pStar,regModel.pGtN,RT1);
-load('mean_initialT20_2.mat','initialT');
-load('errorindext20.mat','T_erindex');
-for i=1:RT1
-initialT(T_erindex(:,i),:,i)=p(T_erindex(:,i),:,i);
-end
-% seedt = randperm(20);
-load('0.0663seed.mat','seedt');
-p(:,1:58,RT1/2+1:RT1)= initialT(:,1:58,seedt(1:RT1/2));
-% p(:,59:87,RT1/2+1:RT1)= p(:,59:87,1:RT1/2);
-% p(:,1:58,RT1/2+1:RT1)= initialT(:,1:58,1:RT1/2);
 % p=reshape(permute(p,[1 3 2]),507*5,87);
 % loss1 = mean(shapeGt('dist',regModel.model,p,repmat(phisT,5,1)));
 % fprintf('  loss=%f     ',loss1); 
