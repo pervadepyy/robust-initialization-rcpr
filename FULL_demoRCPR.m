@@ -94,15 +94,6 @@ end
 load('faceTrlbpHist.mat','faceTrlbpHist');
 [pCur,pGt,pGtN,pStar,imgIds,N,N1]=shapeGt('initTr',...
     IsTr,faceTrlbpHist,phisTr,model,[],bboxesTr,L,10);
-load('mean_initialTr20_2.mat','initialTr');
-load('errorindextr20.mat','Tr_erindex');
-initialTr(Tr_erindex,:) = pCur(Tr_erindex,:);
-seedt = randperm(20);
-% load('0.0663seed.mat','seedt');
-for se=1:L/2
-pCur(1345*(L/2+se-1)+1:1345*(L/2+se),1:58)= initialTr(1345*(seedt(se)-1)+1:1345*seedt(se),1:58);
-end
-% pCur(1345*(L/2)+1:1345*L,1:58)= initialTr(1345*(L/2)+1:1345*L,1:58);
 initData=struct('pCur',pCur,'pGt',pGt,'pGtN',pGtN,'pStar',pStar,...
     'imgIds',imgIds,'N',N,'N1',N1);
 %Create training structure
@@ -121,12 +112,6 @@ t=clock;
 % faceTlbpHist = getlbpHist(faceT);
 load('faceTlbpHist.mat','faceTlbpHist');
 [p, corrindexT]=shapeGt('initTest',faceTrlbpHist,faceTlbpHist,bboxesT,model,pStar,pGtN,RT1);
-load('mean_initialT20_2.mat','initialT');
-load('errorindext20.mat','T_erindex');
-for i=1:RT1
-initialT(T_erindex(:,i),:,i)=p(T_erindex(:,i),:,i);
-end
-p(:,1:58,RT1/2+1:RT1)= initialT(:,1:58,seedt(1:RT1/2));
 %Create test struct
 testPrm = struct('RT1',RT1,'pInit',bboxesT,...
     'regPrm',regPrm,'initData',p,'prunePrm',prunePrm,...
